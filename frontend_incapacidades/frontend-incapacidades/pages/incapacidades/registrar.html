@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Incapacidades - Registrar</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">📋 Corp Solutions</div>
+            <div class="sidebar-user" id="userInfo"></div>
+            <ul class="sidebar-menu">
+                <li><a href="../../dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="../empleados/listar.html">👥 Empleados</a></li>
+                <li><a href="listar.html" class="active">📝 Incapacidades</a></li>
+                <li><a href="../seguimiento/historial.html">📊 Seguimiento</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn btn-danger" style="width:100%">Cerrar Sesión</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h2>Registrar Incapacidad</h2>
+                <a href="listar.html" class="btn btn-secondary">← Volver</a>
+            </div>
+            <div id="mensaje" class="alert" style="display:none"></div>
+            <div style="background:#fff;padding:24px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);max-width:700px">
+                <form id="formRegistrarIncapacidad" onsubmit="event.preventDefault(); registrarIncapacidad();">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                        <div class="form-group">
+                            <label>Empleado *</label>
+                            <select id="empleado_id" name="empleado_id" class="form-control" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo *</label>
+                            <select name="tipo" class="form-control" required>
+                                <option value="">Seleccione...</option>
+                                <option value="enfermedad_general">Enfermedad General</option>
+                                <option value="accidente_laboral">Accidente Laboral</option>
+                                <option value="licencia_medica">Licencia Médica</option>
+                                <option value="incapacidad_temporal">Incapacidad Temporal</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha Inicio *</label>
+                            <input type="date" name="fecha_inicio" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha Fin *</label>
+                            <input type="date" name="fecha_fin" class="form-control" required>
+                        </div>
+                        <div class="form-group" style="grid-column:1 / -1">
+                            <label>Entidad Médica *</label>
+                            <input type="text" name="entidad_medica" class="form-control" required>
+                        </div>
+                        <div class="form-group" style="grid-column:1 / -1">
+                            <label>Diagnóstico General *</label>
+                            <textarea name="diagnostico_general" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group" style="grid-column:1 / -1">
+                            <label>Observaciones</label>
+                            <textarea name="observaciones" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" id="btnGuardar" class="btn btn-primary mt-4">Registrar Incapacidad</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/modules/empleados.js"></script>
+    <script src="../../js/modules/incapacidades.js"></script>
+    <script>
+        if(!requireAuth()){};
+        renderUserInfo();
+        cargarEmpleadoSelect('empleado_id');
+    </script>
+</body>
+</html>

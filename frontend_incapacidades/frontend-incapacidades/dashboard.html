@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Incapacidades</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">📋 Corp Solutions</div>
+            <div class="sidebar-user" id="userInfo"></div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html" class="active">🏠 Dashboard</a></li>
+                <li><a href="pages/empleados/listar.html">👥 Empleados</a></li>
+                <li><a href="pages/incapacidades/listar.html">📝 Incapacidades</a></li>
+                <li><a href="pages/seguimiento/historial.html">📊 Seguimiento</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn btn-danger" style="width:100%">Cerrar Sesión</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h2>Dashboard</h2>
+                <span id="fechaHoy"></span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Empleados</h3>
+                    <div class="value" id="statEmpleados">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Incapacidades Activas</h3>
+                    <div class="value" id="statIncapacidades">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Seguimientos</h3>
+                    <div class="value" id="statSeguimientos">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>En Revisión</h3>
+                    <div class="value" id="statRevision">-</div>
+                </div>
+            </div>
+            <div class="table-container" style="padding:20px">
+                <h3 class="mb-3">Incapacidades Recientes</h3>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Empleado ID</th><th>Inicio</th><th>Fin</th><th>Días</th><th>Tipo</th><th>Estado</th></tr>
+                    </thead>
+                    <tbody id="tablaDashboard"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/modules/empleados.js"></script>
+    <script src="js/modules/incapacidades.js"></script>
+    <script src="js/modules/seguimiento.js"></script>
+    <script>
+        if (!requireAuth()) {};
+        renderUserInfo();
+        document.getElementById('fechaHoy').textContent = new Date().toLocaleDateString('es-CO', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+        async function cargarDashboard() {
+            
+            const rEmp = await apiFetch(CONFIG.EMPLEADOS_URL + '/api/empleados');
+            if (rEmp.ok && rEmp.data.success) {
+                document.getElementById('statEmpleados').textContent = rEmp.data.data.length;
+            }
+
+            const rInc = await apiFetch(CONFIG.INCAPACIDADES_URL + '/api/incapacidades');
+            if (rInc.ok && rInc.data.success) {
+                const incs = rInc.data.data;
+                document.getElementById('statIncapacidades').textContent = incs.filter(i => i.estado !== 'finalizada').length;
+                document.getElementById('statRevision').textContent = incs.filter(i => i.estado === 'en_revision').length;
+
+                const recientes = incs.slice(0, 5);
+                document.getElementById('tablaDashboard').innerHTML = recientes.map(i => `
+                    <tr>
+                        <td>${i.id}</td>
+                        <td>${i.empleado_id}</td>
+                        <td>${formatearFecha(i.fecha_inicio)}</td>
+                        <td>${formatearFecha(i.fecha_fin)}</td>
+                        <td>${i.dias_incapacidad}</td>
+                        <td>${i.tipo.replace(/_/g,' ')}</td>
+                        <td><span class="estado estado-${i.estado}">${i.estado.replace(/_/g,' ')}</span></td>
+                    </tr>
+                `).join('');
+            }
+
+            const rSeg = await apiFetch(CONFIG.SEGUIMIENTO_URL + '/api/seguimientos');
+            if (rSeg.ok && rSeg.data.success) {
+                document.getElementById('statSeguimientos').textContent = rSeg.data.data.length;
+            }
+        }
+        cargarDashboard();
+    </script>
+</body>
+</html>

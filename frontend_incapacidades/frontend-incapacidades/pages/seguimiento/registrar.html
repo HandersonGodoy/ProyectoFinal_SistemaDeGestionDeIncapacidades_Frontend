@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Seguimiento - Registrar</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">📋 Corp Solutions</div>
+            <div class="sidebar-user" id="userInfo"></div>
+            <ul class="sidebar-menu">
+                <li><a href="../../dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="../empleados/listar.html">👥 Empleados</a></li>
+                <li><a href="../incapacidades/listar.html">📝 Incapacidades</a></li>
+                <li><a href="historial.html" class="active">📊 Seguimiento</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn btn-danger" style="width:100%">Cerrar Sesión</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h2>Registrar Seguimiento</h2>
+                <a href="historial.html" class="btn btn-secondary">← Volver</a>
+            </div>
+            <div id="mensaje" class="alert" style="display:none"></div>
+            <div style="background:#fff;padding:24px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);max-width:700px">
+                <form id="formRegistrarSeguimiento" onsubmit="event.preventDefault(); registrarSeguimiento();">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                        <div class="form-group">
+                            <label>Incapacidad ID *</label>
+                            <input type="number" name="incapacidad_id" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha *</label>
+                            <input type="date" name="fecha" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado *</label>
+                            <select name="estado" class="form-control" required>
+                                <option value="">Seleccione...</option>
+                                <option value="registrada">Registrada</option>
+                                <option value="en_revision">En Revisión</option>
+                                <option value="aprobada">Aprobada</option>
+                                <option value="rechazada">Rechazada</option>
+                                <option value="finalizada">Finalizada</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Usuario Responsable *</label>
+                            <select id="usuario_responsable" name="usuario_responsable" class="form-control" required>
+                                <option value="">Seleccione...</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="grid-column:1 / -1">
+                            <label>Comentario *</label>
+                            <textarea name="comentario" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" id="btnGuardar" class="btn btn-primary mt-4">Registrar Seguimiento</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/modules/seguimiento.js"></script>
+    <script>
+        if(!requireAuth()){};
+        renderUserInfo();
+        llenarSelectUsuarios();
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema de Gestión de Incapacidades</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login-page">
+    <div class="login-box">
+        <h1>Corporate Solutions</h1>
+        <p>Sistema de Gestión de Incapacidades Médicas</p>
+        <div id="mensaje" class="alert" style="display:none"></div>
+        <form id="formLogin">
+            <div class="form-group">
+                <label for="usuario">Usuario o Correo</label>
+                <input type="text" id="usuario" class="form-control" placeholder="admin o admin@empresa.com" required>
+            </div>
+            <div class="form-group">
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="contrasena" class="form-control" placeholder="••••••" required>
+            </div>
+            <button type="submit" id="btnLogin" class="btn btn-primary">Iniciar Sesión</button>
+        </form>
+        <p style="margin-top:16px; font-size:12px; color:#9ca3af">
+            Credenciales demo:<br>
+            admin / admin123 &nbsp;|&nbsp; gestionhumana / gh123
+        </p>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

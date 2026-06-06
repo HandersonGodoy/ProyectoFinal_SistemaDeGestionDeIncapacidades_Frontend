@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleados - Listar</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">📋 Corp Solutions</div>
+            <div class="sidebar-user" id="userInfo"></div>
+            <ul class="sidebar-menu">
+                <li><a href="../../dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="listar.html" class="active">👥 Empleados</a></li>
+                <li><a href="../incapacidades/listar.html">📝 Incapacidades</a></li>
+                <li><a href="../seguimiento/historial.html">📊 Seguimiento</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn btn-danger" style="width:100%">Cerrar Sesión</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h2>Gestión de Empleados</h2>
+                <a href="crear.html" class="btn btn-primary">+ Nuevo Empleado</a>
+            </div>
+            <div id="mensaje" class="alert" style="display:none"></div>
+            <div class="filtros-bar">
+                <div class="form-group">
+                    <label>Documento</label>
+                    <input type="text" id="filtroDocumento" class="form-control" placeholder="Buscar...">
+                </div>
+                <div class="form-group">
+                    <label>Área</label>
+                    <input type="text" id="filtroArea" class="form-control" placeholder="Buscar...">
+                </div>
+                <div class="form-group">
+                    <label>Cargo</label>
+                    <input type="text" id="filtroCargo" class="form-control" placeholder="Buscar...">
+                </div>
+                <button onclick="cargarEmpleados()" class="btn btn-secondary">Buscar</button>
+                <button onclick="document.getElementById('filtroDocumento').value='';document.getElementById('filtroArea').value='';document.getElementById('filtroCargo').value='';cargarEmpleados()" class="btn btn-warning">Limpiar</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Nombre</th><th>Documento</th><th>Correo</th><th>Teléfono</th><th>Cargo</th><th>Área</th><th>Estado</th><th>Acciones</th></tr>
+                    </thead>
+                    <tbody id="tablaEmpleados"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/modules/empleados.js"></script>
+    <script>if(!requireAuth()){}; renderUserInfo(); cargarEmpleados();</script>
+</body>
+</html>

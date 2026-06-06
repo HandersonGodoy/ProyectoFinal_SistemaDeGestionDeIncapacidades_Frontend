@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Seguimiento - Historial</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">📋 Corp Solutions</div>
+            <div class="sidebar-user" id="userInfo"></div>
+            <ul class="sidebar-menu">
+                <li><a href="../../dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="../empleados/listar.html">👥 Empleados</a></li>
+                <li><a href="../incapacidades/listar.html">📝 Incapacidades</a></li>
+                <li><a href="historial.html" class="active">📊 Seguimiento</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn btn-danger" style="width:100%">Cerrar Sesión</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h2>Historial de Seguimiento</h2>
+                <a href="registrar.html" class="btn btn-primary">+ Registrar Seguimiento</a>
+            </div>
+            <div id="mensaje" class="alert" style="display:none"></div>
+            <div class="filtros-bar">
+                <div class="form-group">
+                    <label>Incapacidad ID</label>
+                    <input type="number" id="filtroIncapacidad" class="form-control" placeholder="ID...">
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select id="filtroEstado" class="form-control">
+                        <option value="">Todos</option>
+                        <option value="registrada">Registrada</option>
+                        <option value="en_revision">En Revisión</option>
+                        <option value="aprobada">Aprobada</option>
+                        <option value="rechazada">Rechazada</option>
+                        <option value="finalizada">Finalizada</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fecha</label>
+                    <input type="date" id="filtroFecha" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Responsable</label>
+                    <input type="text" id="filtroResponsable" class="form-control" placeholder="Usuario...">
+                </div>
+                <button onclick="cargarSeguimientos()" class="btn btn-secondary">Buscar</button>
+                <button onclick="document.getElementById('filtroIncapacidad').value='';document.getElementById('filtroEstado').value='';document.getElementById('filtroFecha').value='';document.getElementById('filtroResponsable').value='';cargarSeguimientos()" class="btn btn-warning">Limpiar</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Inc ID</th><th>Fecha</th><th>Comentario</th><th>Estado</th><th>Responsable</th><th>Acciones</th></tr>
+                    </thead>
+                    <tbody id="tablaSeguimientos"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/modules/seguimiento.js"></script>
+    <script>if(!requireAuth()){}; renderUserInfo(); cargarSeguimientos();</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleados - Ver</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">📋 Corp Solutions</div>
+            <div class="sidebar-user" id="userInfo"></div>
+            <ul class="sidebar-menu">
+                <li><a href="../../dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="listar.html" class="active">👥 Empleados</a></li>
+                <li><a href="../incapacidades/listar.html">📝 Incapacidades</a></li>
+                <li><a href="../seguimiento/historial.html">📊 Seguimiento</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn btn-danger" style="width:100%">Cerrar Sesión</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h2>Detalle del Empleado</h2>
+                <a href="listar.html" class="btn btn-secondary">← Volver</a>
+            </div>
+            <div style="background:#fff;padding:24px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);max-width:600px">
+                <p><strong>Nombres:</strong> <span id="emp_nombres"></span></p>
+                <p><strong>Apellidos:</strong> <span id="emp_apellidos"></span></p>
+                <p><strong>Documento:</strong> <span id="emp_documento"></span></p>
+                <p><strong>Correo:</strong> <span id="emp_correo"></span></p>
+                <p><strong>Teléfono:</strong> <span id="emp_telefono"></span></p>
+                <p><strong>Cargo:</strong> <span id="emp_cargo"></span></p>
+                <p><strong>Área:</strong> <span id="emp_area"></span></p>
+                <p><strong>Fecha Ingreso:</strong> <span id="emp_fecha_ingreso"></span></p>
+                <p><strong>Estado:</strong> <span id="emp_estado"></span></p>
+                <p><strong>Creado:</strong> <span id="emp_created_at"></span></p>
+                <p><strong>Actualizado:</strong> <span id="emp_updated_at"></span></p>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/modules/empleados.js"></script>
+    <script>if(!requireAuth()){}; renderUserInfo(); verEmpleado();</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Incapacidades - Listar</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">📋 Corp Solutions</div>
+            <div class="sidebar-user" id="userInfo"></div>
+            <ul class="sidebar-menu">
+                <li><a href="../../dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="../empleados/listar.html">👥 Empleados</a></li>
+                <li><a href="listar.html" class="active">📝 Incapacidades</a></li>
+                <li><a href="../seguimiento/historial.html">📊 Seguimiento</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn btn-danger" style="width:100%">Cerrar Sesión</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h2>Gestión de Incapacidades</h2>
+                <a href="registrar.html" class="btn btn-primary">+ Registrar Incapacidad</a>
+            </div>
+            <div id="mensaje" class="alert" style="display:none"></div>
+            <div class="filtros-bar">
+                <div class="form-group">
+                    <label>Empleado</label>
+                    <select id="filtroEmpleado" class="form-control"><option value="">Todos</option></select>
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select id="filtroEstado" class="form-control">
+                        <option value="">Todos</option>
+                        <option value="registrada">Registrada</option>
+                        <option value="en_revision">En Revisión</option>
+                        <option value="aprobada">Aprobada</option>
+                        <option value="rechazada">Rechazada</option>
+                        <option value="finalizada">Finalizada</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <select id="filtroTipo" class="form-control">
+                        <option value="">Todos</option>
+                        <option value="enfermedad_general">Enfermedad General</option>
+                        <option value="accidente_laboral">Accidente Laboral</option>
+                        <option value="licencia_medica">Licencia Médica</option>
+                        <option value="incapacidad_temporal">Incapacidad Temporal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fecha Inicio</label>
+                    <input type="date" id="filtroFechaInicio" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Fecha Fin</label>
+                    <input type="date" id="filtroFechaFin" class="form-control">
+                </div>
+                <button onclick="cargarIncapacidades()" class="btn btn-secondary">Buscar</button>
+                <button onclick="document.getElementById('filtroEmpleado').value='';document.getElementById('filtroEstado').value='';document.getElementById('filtroTipo').value='';document.getElementById('filtroFechaInicio').value='';document.getElementById('filtroFechaFin').value='';cargarIncapacidades()" class="btn btn-warning">Limpiar</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Emp ID</th><th>Inicio</th><th>Fin</th><th>Días</th><th>Tipo</th><th>Estado</th><th>Entidad</th><th>Acciones</th></tr>
+                    </thead>
+                    <tbody id="tablaIncapacidades"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/modules/empleados.js"></script>
+    <script src="../../js/modules/incapacidades.js"></script>
+    <script>
+        if(!requireAuth()){};
+        renderUserInfo();
+        cargarEmpleadoSelect('filtroEmpleado');
+        cargarIncapacidades();
+    </script>
+</body>
+</html>
