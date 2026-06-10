@@ -97,7 +97,7 @@ async function verEmpleado() {
 
     const result = await apiFetch(API_EMP + '/' + id);
     if (!result.ok || !result.data.success) {
-        mostrarMensaje('error', 'Empleado no encontrado');
+        mostrarMensaje('error', 'Empleado no encontrado, verificalo por favor');
         return;
     }
 
@@ -150,11 +150,11 @@ async function crearEmpleado() {
     btn.disabled = false;
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Empleado creado exitosamente');
+        mostrarMensaje('success', 'Empleado creado exitosamente, cargado al sistema');
         form.reset();
         setTimeout(() => window.location.href = 'listar.html', 1200);
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al crear empleado');
+        mostrarMensaje('error', result.data.message || 'Error al crear empleado, verificalo por favor');
     }
 }
 
@@ -165,7 +165,7 @@ async function cargarEmpleadoEdicion() {
 
     const result = await apiFetch(API_EMP + '/' + id);
     if (!result.ok || !result.data.success) {
-        mostrarMensaje('error', 'Empleado no encontrado');
+        mostrarMensaje('error', 'Empleado no encontrado, verficalo por favor');
         return;
     }
 
@@ -195,10 +195,10 @@ async function actualizarEmpleado() {
     btn.disabled = false;
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Empleado actualizado exitosamente');
+        mostrarMensaje('success', 'Empleado actualizado exitosamente, cargado al sistema');
         setTimeout(() => window.location.href = 'listar.html', 1200);
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al actualizar empleado');
+        mostrarMensaje('error', result.data.message || 'Error al actualizar empleado, verificalo por favor');
     }
 }
 
@@ -211,22 +211,22 @@ async function cambiarEstadoEmpleado(id, nuevoEstado) {
     });
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Estado actualizado correctamente');
+        mostrarMensaje('success', 'Estado actualizado correctamente, cargado al sistema');
         cargarEmpleados();
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al cambiar estado');
+        mostrarMensaje('error', result.data.message || 'Error al cambiar estado, verificalo por favor');
     }
 }
 
 async function eliminarEmpleado(id) {
-    if (!confirm('¿Está seguro de eliminar este empleado? Esta acción no se puede deshacer.')) return;
+    if (!confirm('¿Estas seguro de eliminar este empleado?, esta accion no se puede deshacer')) return;
 
     const result = await apiFetch(API_EMP + '/' + id, { method: 'DELETE' });
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Empleado eliminado correctamente');
+        mostrarMensaje('success', 'Empleado eliminado correctamente, cargado al sistema');
         cargarEmpleados();
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al eliminar empleado');
+        mostrarMensaje('error', result.data.message || 'Error al eliminar empleado, verificalo por favor');
     }
 }

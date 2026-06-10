@@ -4,7 +4,7 @@ async function login() {
     const btn = document.getElementById('btnLogin');
 
     if (!usuario || !contrasena) {
-        mostrarMensaje('error', 'Ingrese usuario y contraseña');
+        mostrarMensaje('error', 'Ingrese por favor su usuario y contraseña');
         return;
     }
 
@@ -17,14 +17,14 @@ async function login() {
     });
 
     btn.disabled = false;
-    btn.textContent = 'Iniciar Sesión';
+    btn.textContent = 'Iniciar Sesion';
 
     if (result.ok && result.data.success) {
         localStorage.setItem(CONFIG.TOKEN_KEY, result.data.token);
         localStorage.setItem(CONFIG.USER_KEY, JSON.stringify(result.data.usuario));
         window.location.href = 'dashboard.html';
     } else {
-        mostrarMensaje('error', result.data.message || 'Credenciales incorrectas');
+        mostrarMensaje('error', result.data.message || 'Credenciales incorrectas, por favor verificalo');
     }
 }
 

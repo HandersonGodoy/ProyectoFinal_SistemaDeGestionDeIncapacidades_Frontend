@@ -64,7 +64,7 @@ async function registrarIncapacidad() {
     const fInicio = new Date(data.fecha_inicio);
     const fFin = new Date(data.fecha_fin);
     if (fFin < fInicio) {
-        mostrarMensaje('error', 'La fecha fin no puede ser menor a la fecha inicio');
+        mostrarMensaje('error', 'La fecha fin no puede ser menor a la fecha inicio, verificalo por favor');
         return;
     }
 
@@ -76,11 +76,11 @@ async function registrarIncapacidad() {
     btn.disabled = false;
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Incapacidad registrada exitosamente');
+        mostrarMensaje('success', 'Incapacidad registrada exitosamente, cargada al sistema');
         form.reset();
         setTimeout(() => window.location.href = 'listar.html', 1200);
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al registrar incapacidad');
+        mostrarMensaje('error', result.data.message || 'Error al registrar incapacidad, verificala por favor');
     }
 }
 
@@ -91,7 +91,7 @@ async function verIncapacidad() {
 
     const result = await apiFetch(API_INC + '/' + id);
     if (!result.ok || !result.data.success) {
-        mostrarMensaje('error', 'Incapacidad no encontrada');
+        mostrarMensaje('error', 'Incapacidad no encontrada, verificala por favor');
         return;
     }
 
@@ -115,13 +115,13 @@ async function cargarIncapacidadEdicion() {
 
     const result = await apiFetch(API_INC + '/' + id);
     if (!result.ok || !result.data.success) {
-        mostrarMensaje('error', 'Incapacidad no encontrada');
+        mostrarMensaje('error', 'Incapacidad no encontrada, verificala por favor');
         return;
     }
 
     const i = result.data.data;
     if (i.estado === 'finalizada') {
-        mostrarMensaje('error', 'No se puede editar una incapacidad finalizada');
+        mostrarMensaje('error', 'No se puede editar una incapacidad finalizada, cargada al sistema');
         setTimeout(() => window.location.href = 'listar.html', 1500);
         return;
     }
@@ -146,7 +146,7 @@ async function actualizarIncapacidad() {
         const fInicio = new Date(data.fecha_inicio);
         const fFin = new Date(data.fecha_fin);
         if (fFin < fInicio) {
-            mostrarMensaje('error', 'La fecha fin no puede ser menor a la fecha inicio');
+            mostrarMensaje('error', 'La fecha fin no puede ser menor a la fecha inicio, verificala por favor');
             return;
         }
     }
@@ -159,28 +159,28 @@ async function actualizarIncapacidad() {
     btn.disabled = false;
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Incapacidad actualizada exitosamente');
+        mostrarMensaje('success', 'Incapacidad actualizada exitosamente, cargada al sistema');
         setTimeout(() => window.location.href = 'listar.html', 1200);
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al actualizar');
+        mostrarMensaje('error', result.data.message || 'Error al actualizar, verificalo por favor');
     }
 }
 
 async function finalizarIncapacidad(id) {
-    if (!confirm('¿Está seguro de finalizar esta incapacidad?')) return;
+    if (!confirm('¿Está seguro de finalizar esta incapacidad?, se carga al sistema')) return;
 
     const result = await apiFetch(API_INC + '/' + id + '/finalizar', { method: 'PATCH' });
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Incapacidad finalizada correctamente');
+        mostrarMensaje('success', 'Incapacidad finalizada correctamente, cargada al sistema');
         cargarIncapacidades();
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al finalizar');
+        mostrarMensaje('error', result.data.message || 'Error al finalizar, verificalo por favor');
     }
 }
 
 async function activarIncapacidad(id) {
-    if (!confirm('¿Está seguro de reactivar esta incapacidad? Cambiará a estado "registrada".')) return;
+    if (!confirm('¿Estas seguro de reactivar esta incapacidad?, Cambiara su estado a "registrada".')) return;
 
     const result = await apiFetch(API_INC + '/' + id + '/estado', {
         method: 'PATCH',
@@ -188,22 +188,22 @@ async function activarIncapacidad(id) {
     });
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Incapacidad reactivada correctamente');
+        mostrarMensaje('success', 'Incapacidad reactivada correctamente, cargada al sistema');
         cargarIncapacidades();
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al reactivar');
+        mostrarMensaje('error', result.data.message || 'Error al reactivar, verificalo por favor');
     }
 }
 
 async function eliminarIncapacidad(id) {
-    if (!confirm('¿Está seguro de eliminar esta incapacidad?')) return;
+    if (!confirm('¿Estas seguro de eliminar esta incapacidad?')) return;
 
     const result = await apiFetch(API_INC + '/' + id, { method: 'DELETE' });
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Incapacidad eliminada correctamente');
+        mostrarMensaje('success', 'Incapacidad eliminada correctamente, cargada al sistema');
         cargarIncapacidades();
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al eliminar');
+        mostrarMensaje('error', result.data.message || 'Error al eliminar, verificalo por favor');
     }
 }

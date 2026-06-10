@@ -69,7 +69,7 @@ async function registrarSeguimiento() {
 
     const fecha = new Date(data.fecha);
     if (isNaN(fecha.getTime())) {
-        mostrarMensaje('error', 'Fecha inválida');
+        mostrarMensaje('error', 'Fecha invalida, verificalo por favor');
         return;
     }
 
@@ -81,11 +81,11 @@ async function registrarSeguimiento() {
     btn.disabled = false;
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Seguimiento registrado exitosamente');
+        mostrarMensaje('success', 'Seguimiento registrado exitosamente, cargado al sistema');
         form.reset();
         setTimeout(() => window.location.href = 'historial.html', 1200);
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al registrar seguimiento');
+        mostrarMensaje('error', result.data.message || 'Error al registrar seguimiento, verificalo por favor');
     }
 }
 
@@ -96,7 +96,7 @@ async function verSeguimiento() {
 
     const result = await apiFetch(API_SEG + '/' + id);
     if (!result.ok || !result.data.success) {
-        mostrarMensaje('error', 'Seguimiento no encontrado');
+        mostrarMensaje('error', 'Seguimiento no encontrado,, no verificado en el sistema');
         return;
     }
 
@@ -119,9 +119,9 @@ async function eliminarSeguimiento(id) {
     const result = await apiFetch(API_SEG + '/' + id, { method: 'DELETE' });
 
     if (result.ok && result.data.success) {
-        mostrarMensaje('success', 'Seguimiento eliminado correctamente');
+        mostrarMensaje('success', 'Seguimiento eliminado correctamente, cargado al sistema');
         cargarSeguimientos();
     } else {
-        mostrarMensaje('error', result.data.message || 'Error al eliminar');
+        mostrarMensaje('error', result.data.message || 'Error al eliminar, verificalo por favor');
     }
 }
