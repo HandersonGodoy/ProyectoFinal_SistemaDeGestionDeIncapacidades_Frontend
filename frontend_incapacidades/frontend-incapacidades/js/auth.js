@@ -32,7 +32,13 @@ async function logout() {
     await apiFetch(CONFIG.AUTH_URL + '/api/auth/logout', { method: 'POST' });
     localStorage.removeItem(CONFIG.TOKEN_KEY);
     localStorage.removeItem(CONFIG.USER_KEY);
-    window.location.href = 'index.html';
+    
+    const path = window.location.pathname;
+    if (path.includes('/pages/')) {
+        window.location.href = '../../index.html';
+    } else {
+        window.location.href = 'index.html';
+    }
 }
 
 function getUser() {

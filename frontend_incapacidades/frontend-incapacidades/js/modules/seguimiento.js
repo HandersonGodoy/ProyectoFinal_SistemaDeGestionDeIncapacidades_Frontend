@@ -38,7 +38,7 @@ async function cargarSeguimientos() {
         <tr>
             <td>${s.id}</td>
             <td>${s.incapacidad_id}</td>
-            <td>${formatearFecha(s.fecha)}</td>
+            <td>${s.fecha ? s.fecha.substring(0, 10) : '-'}</td>
             <td>${s.comentario}</td>
             <td><span class="estado estado-${s.estado}">${s.estado.replace(/_/g, ' ')}</span></td>
             <td>${s.usuario_responsable}</td>
@@ -67,7 +67,7 @@ async function registrarSeguimiento() {
     const data = Object.fromEntries(new FormData(form));
     const btn = document.getElementById('btnGuardar');
 
-    const fecha = new Date(data.fecha);
+    const fecha = new Date(data.fecha + 'T00:00:00');
     if (isNaN(fecha.getTime())) {
         mostrarMensaje('error', 'Fecha invalida, verificalo por favor');
         return;
@@ -106,8 +106,15 @@ async function verSeguimiento() {
         const el = document.getElementById('seg_' + c);
         if (el) {
             let val = s[c] || '-';
-            if (c === 'fecha' || c.includes('created') || c.includes('updated')) val = formatearFecha(val);
-            if (c === 'estado') val = val.replace(/_/g, ' ');
+            
+            if (c === 'fecha') {
+                val = val.substring(0, 10);
+            } else if (c.includes('created') || c.includes('updated')) {
+                val = formatearFecha(val);
+            } else if (c === 'estado') {
+                val = val.replace(/_/g, ' ');
+            }
+            
             el.textContent = val;
         }
     });

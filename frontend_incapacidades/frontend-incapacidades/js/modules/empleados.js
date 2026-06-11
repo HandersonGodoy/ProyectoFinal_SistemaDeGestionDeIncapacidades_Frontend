@@ -105,7 +105,18 @@ async function verEmpleado() {
     const campos = ['nombres','apellidos','documento','correo','telefono','cargo','area','fecha_ingreso','estado','created_at','updated_at'];
     campos.forEach(c => {
         const el = document.getElementById('emp_' + c);
-        if (el) el.textContent = e[c] || '-';
+        if (el) {
+            let val = e[c] || '-';
+            if ((c === 'created_at' || c === 'updated_at') && val !== '-') {
+                const f = new Date(val);
+                val = f.toLocaleString('es-CO', {
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit',
+                    hour12: false
+                });
+            }
+            el.textContent = val;
+        }
     });
 }
 
